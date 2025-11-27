@@ -1,6 +1,6 @@
 mode: Flood_Fill_Standard_FASTESTSPEEDRUN
 maze: example4
-speed: 28.930
+speed: 28.9309
 --------------------
 mode: Flood_Fill_Standard
 maze: example4
