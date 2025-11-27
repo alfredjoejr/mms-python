@@ -1,4 +1,3 @@
-
 import API
 import sys
 import time
@@ -8,6 +7,12 @@ from collections import deque
 MAZE_SIZE = 16
 CENTER_GOALS = [(7, 7), (7, 8), (8, 7), (8, 8)]
 START_GOAL = [(0, 0)]
+
+# --- LOGGING CONFIGURATION (EDIT THESE) ---
+# Since the code can't "see" the simulator settings, you must type them here:
+MOUSE_NAME = "Flood_Fill_Standard" 
+MAZE_NAME = "example4"  
+OUTPUT_FILE = "speed_test.txt"
 
 # --- STATE MANAGEMENT ---
 # 0 = Searching for Center
@@ -25,6 +30,18 @@ costs = [[999 for _ in range(MAZE_SIZE)] for _ in range(MAZE_SIZE)]
 def log(string):
     sys.stderr.write("{}\n".format(string))
     sys.stderr.flush()
+
+def save_result_to_file(duration):
+    """Appends the run details to a text file."""
+    try:
+        with open(OUTPUT_FILE, "a") as f:
+            f.write(f"mode: {MOUSE_NAME}\n")
+            f.write(f"maze: {MAZE_NAME}\n")
+            f.write(f"speed: {duration:.4f}\n")
+            f.write("-" * 20 + "\n") # Adds a separator line
+        log(f"Saved result to {OUTPUT_FILE}")
+    except Exception as e:
+        log(f"Error saving to file: {e}")
 
 def update_walls():
     """Reads sensors and updates the wall map."""
@@ -165,6 +182,10 @@ def main():
                 end_time = time.time()
                 duration = end_time - start_time
                 log(f"SPEED RUN COMPLETE! Time: {duration:.4f} seconds")
+                
+                # --- SAVE TO FILE ---
+                save_result_to_file(duration)
+                # --------------------
                 
                 API.setText(x, y, "WIN")
                 API.setColor(x, y, "R")

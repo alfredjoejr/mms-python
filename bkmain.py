@@ -1,12 +1,17 @@
 import API
-import time  # <--- Ensure this is imported
 import sys
+import time
 from collections import deque
 
-# Constants
+# --- CONFIGURATION ---
 MAZE_SIZE = 16
 # The center destination cells (Standard Micromouse Goal)
 GOALS = [(7, 7), (7, 8), (8, 7), (8, 8)]
+
+# Since the code can't "see" the simulator settings, you must type them here:
+MOUSE_NAME = "Flood_Fill_Standard" 
+MAZE_NAME = "example4"  
+OUTPUT_FILE = "speed_test.txt"
 
 # Global variables to track robot state
 x = 0
@@ -23,6 +28,18 @@ costs = [[999 for _ in range(MAZE_SIZE)] for _ in range(MAZE_SIZE)]
 def log(string):
     sys.stderr.write("{}\n".format(string))
     sys.stderr.flush()
+
+def save_result_to_file(duration):
+    """Appends the run details to a text file."""
+    try:
+        with open(OUTPUT_FILE, "a") as f:
+            f.write(f"mode: {MOUSE_NAME}\n")
+            f.write(f"maze: {MAZE_NAME}\n")
+            f.write(f"speed: {duration:.4f}\n")
+            f.write("-" * 20 + "\n") 
+        log(f"Saved result to {OUTPUT_FILE}")
+    except Exception as e:
+        log(f"Error saving to file: {e}")
 
 def update_walls():
     """Checks actual sensors and updates the internal wall map."""
@@ -130,10 +147,8 @@ def main():
     API.setColor(0, 0, "G")
     API.setText(0, 0, "START")
 
-    # ### NEW CODE: START TIMER ###
     start_time = time.time()
     log("Timer Started!")
-    # ############################
 
     while True:
         # 1. Read Sensors & Update Wall Map
@@ -148,11 +163,13 @@ def main():
 
         # 4. Check if we reached the goal (Center)
         if costs[x][y] == 0:
-            # ### NEW CODE: STOP TIMER ###
             end_time = time.time()
             duration = end_time - start_time
             log(f"GOAL REACHED! Search Time: {duration:.4f} seconds")
-            # ############################
+            
+            # --- SAVE TO FILE ---
+            save_result_to_file(duration)
+            # --------------------
 
             API.setText(x, y, "GOAL")
             API.setColor(x, y, "R")
