@@ -6,3 +6,15 @@ mode: Flood_Fill_Standard
 maze: example4
 speed: 57.8812
 --------------------
+mode: Flood_Fill_Standard
+maze: example1
+speed: 67.0619
+--------------------
+mode: Python_Weighted_FloodFill
+maze: example1
+speed: 42.4807
+--------------------
+mode: Flood_Fill_Standard_FASTESTSPEEDRUN
+maze: example1
+speed: 39.0137
+--------------------

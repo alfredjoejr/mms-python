@@ -10,8 +10,8 @@ START_GOAL = [(0, 0)]
 
 # --- LOGGING CONFIGURATION (EDIT THESE) ---
 # Since the code can't "see" the simulator settings, you must type them here:
-MOUSE_NAME = "Flood_Fill_Standard" 
-MAZE_NAME = "example4"  
+MOUSE_NAME = "Flood_Fill_Standard_FASTESTSPEEDRUN" 
+MAZE_NAME = "example1"  
 OUTPUT_FILE = "speed_test.txt"
 
 # --- STATE MANAGEMENT ---
